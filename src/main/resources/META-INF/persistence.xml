@@ -5,6 +5,15 @@
   <persistence-unit name="assignment4-PU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:app/jdbc/banking</jta-data-source>
+    <class>com.algonquincollege.cst8277.models.AccountBase</class>
+    <class>com.algonquincollege.cst8277.models.Asset</class>
+    <class>com.algonquincollege.cst8277.models.User</class>
+    <class>com.algonquincollege.cst8277.models.ChequingAccount</class>
+    <class>com.algonquincollege.cst8277.models.InvestmentAccount</class>
+    <class>com.algonquincollege.cst8277.models.PlatformRole</class>
+    <class>com.algonquincollege.cst8277.models.PlatformUser</class>
+    <class>com.algonquincollege.cst8277.models.Portfolio</class>
+    <class>com.algonquincollege.cst8277.models.SavingsAccount</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
         <!-- javax.persistence.schema-generation.database.action replaces hibernate.hbm2ddl.auto (sorta)

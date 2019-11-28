@@ -20,7 +20,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity(name = "AccountBase")
+@Entity(name = "Account")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="ACCOUNT")
 @DiscriminatorColumn(name = "ACCOUNT_TYPE", length = 1)
