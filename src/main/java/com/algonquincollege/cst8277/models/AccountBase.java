@@ -20,6 +20,17 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+//@JsonTypeInfo(
+//    use = JsonTypeInfo.Id.NAME,
+//    include = JsonTypeInfo.As.PROPERTY,
+//    property = "type")
+//@JsonSubTypes({
+//    @Type(value = ChequingAccount.class, name = "C"),
+//    @Type(value = InvestmentAccount.class, name = "I"),
+//    @Type(value = SavingsAccount.class, name = "S")})
 @Entity(name = "Account")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="ACCOUNT")
