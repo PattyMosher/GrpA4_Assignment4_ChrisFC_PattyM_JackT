@@ -36,7 +36,6 @@
     
     <!-- test properties -->
     <junit.version>4.12</junit.version>
-    <jersey-client.version>2.29</jersey-client.version>
   </properties>
 
   <dependencies>
@@ -92,17 +91,6 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.core</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>${jersey-client.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.inject</groupId>
-      <artifactId>jersey-hk2</artifactId>
-      <version>${jersey-client.version}</version>
     </dependency>
   </dependencies>
 
