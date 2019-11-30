@@ -1,17 +1,6 @@
 package com.algonquincollege.cst8277.rest;
 
-import static com.algonquincollege.cst8277.util.MyConstants.ADMIN_ROLE;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_API_VERSION;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_NAME;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_OPENAPI_DESCRIPTION;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_OPENAPI_SECURITY_HTTP_AUTH_SCHEMA;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_OPENAPI_SECURITY_SCHEME;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_OPENAPI_TITLE;
-import static com.algonquincollege.cst8277.util.MyConstants.APPLICATION_OPENAPI_VERSION;
-import static com.algonquincollege.cst8277.util.MyConstants.USER_ROLE;
-
-import java.util.HashSet;
-import java.util.Set;
+import static com.algonquincollege.cst8277.util.MyConstants.*;
 
 import javax.annotation.security.DeclareRoles;
 import javax.ws.rs.ApplicationPath;
@@ -23,7 +12,6 @@ import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.servers.Server;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 @ApplicationPath(APPLICATION_API_VERSION)
 @OpenAPIDefinition(info = @Info(
@@ -43,14 +31,4 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 )
 @DeclareRoles({USER_ROLE, ADMIN_ROLE}) //or in web.xml, or ServletContextListener
 public class RestConfig extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classes = new HashSet<>();
-        classes.add(UserResource.class);
-        classes.add(AccountResource.class);
-        classes.add(JacksonFeature.class);
-        return classes;
-    }
-
 }

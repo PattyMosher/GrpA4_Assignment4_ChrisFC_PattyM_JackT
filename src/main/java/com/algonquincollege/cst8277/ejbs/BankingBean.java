@@ -4,10 +4,6 @@
  * @author Mike Norman
  *
  * @date 2019 10
- * 
- * @author Patty Mosher, Jack Tan, Chris Fortin-Cherryholme
- * @modified Nov 2019
- * 
  */
 package com.algonquincollege.cst8277.ejbs;
 
@@ -22,7 +18,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import com.algonquincollege.cst8277.models.AccountBase;
-import com.algonquincollege.cst8277.models.User;
 
 @Stateless
 public class BankingBean {
@@ -30,76 +25,33 @@ public class BankingBean {
     @PersistenceContext(unitName = PU_NAME)
     protected EntityManager em;
 
-
-    /**
-     *  Gets account by accountId
-     * @param accountId the account to fetch
-     * @return account
-     */
+    //TODO - methods to handle CRUD for Banking entities
+    
     public List<AccountBase> getBankAccountsFor(int accountId) {
         TypedQuery<AccountBase> query = em.createQuery("SELECT a FROM Account a", AccountBase.class);
         return query.getResultList();
     }
 
-    /**
-     * 
-     * @param account the account to create
-     * @return Account
-     */
     @Transactional
     public AccountBase createAccount(AccountBase account) {
         em.persist(account);
         return account;
     }
 
-    /**
-     * Reads an account
-     * @param id the id of account to read
-     * @return the account object
-     */
     public AccountBase readAccount(int id) {
         return em.find(AccountBase.class, id);
     }
 
-    /**
-     *  Updates an account
-     * @param account the account to be updated
-     * @return updated account
-     */
     @Transactional
     public AccountBase updateAccount(AccountBase account) {
         return em.merge(account);
     }
 
-    /**
-     * Deletes an account
-     * @param id the id of the account to delete
-     */
     @Transactional
     public void deleteAccount(int id) {
         AccountBase account = readAccount(id);
         if (account != null) {
           em.remove(account);
         }
-    }
-    /**
-     * Gets all the users
-     * @return List<User> of all users
-     */
-    public List<User> getAllUsers() {
-        TypedQuery<User> query = em.createQuery("SELECT * FROM Account a", User.class);
-        return query.getResultList();
-    }
-    /**
-     * Creates a new User
-     * @param username the user's name
-     * @return User
-     */
-    @Transactional
-    public User createUser(String username) {
-        User usr = new User();
-        usr.setName(username);
-        em.persist(usr);
-        return usr;
     }
 }
