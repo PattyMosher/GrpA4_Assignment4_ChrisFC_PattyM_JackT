@@ -29,7 +29,7 @@ import javax.persistence.Table;
  * User class used for (JSR-375) Java EE Security authorization/authentication
  */
 
-@Entity
+@Entity(name="PlatformUser")
 @Table(name="PLATFORM_USER")
 public class PlatformUser extends ModelBase implements Principal, Serializable {
     /** explicit set serialVersionUID */

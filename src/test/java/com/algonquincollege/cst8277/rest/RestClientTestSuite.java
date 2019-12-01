@@ -22,6 +22,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +43,37 @@ public class RestClientTestSuite  {
                 .port(8080);
         webTarget = client.target(uriBuilder);
     }
-//    
+    
+    @Test
+    public void testBasicAuth() {
+        HttpAuthenticationFeature feature = 
+            HttpAuthenticationFeature.basic("admin", "admin");
+        Client client = ClientBuilder.newClient();
+        URI uri = UriBuilder
+            .fromUri(APPLICATION_NAME + APPLICATION_API_VERSION)
+            .scheme("http")
+            .host("localhost")
+            .port(8080)
+            .build();
+        WebTarget webTarget = client
+            .register(feature)
+            .target(uri)
+            .path("user");
+        Response response = webTarget
+            .request(APPLICATION_JSON)
+            .get();
+        assertThat(response.getStatus(), is(200));
+    }
+    
+    @Test
+    public void test_hello_post() {
+        Response response = webTarget
+                .path("account/1")
+                .request(APPLICATION_JSON)
+                .get();
+        assertThat(response.getStatus(), is(200));
+    }
+    
 //    @Test
 //    public void test_hello_get() {
 //        Response response = webTarget
@@ -53,25 +84,5 @@ public class RestClientTestSuite  {
 //        MessageHolder msgH = response.readEntity(MessageHolder.class);
 //        assertEquals("hello from the other side!", msgH.getMsg());
 //    }
-//    
-//    @Test
-//    public void testBasicAuth() {
-//        HttpAuthenticationFeature feature = 
-//            HttpAuthenticationFeature.basic("admin", "admin");
-//        Client client = ClientBuilder.newClient();
-//        URI uri = UriBuilder
-//            .fromUri(APPLICATION_NAME + APPLICATION_API_VERSION)
-//            .scheme("http")
-//            .host("localhost")
-//            .port(8080)
-//            .build();
-//        WebTarget webTarget = client
-//            .register(feature)
-//            .target(uri)
-//            .path("user");
-//        Response response = webTarget
-//            .request(APPLICATION_JSON)
-//            .get();
-//        assertThat(response.getStatus(), is(200));
-//    }
+
 }
