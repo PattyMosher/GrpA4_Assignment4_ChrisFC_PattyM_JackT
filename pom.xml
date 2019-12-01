@@ -29,6 +29,8 @@
     <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
     <maven.project.info.reports.plugin.version>3.0.0</maven.project.info.reports.plugin.version>
     <failOnMissingWebXml>false</failOnMissingWebXml>
+    <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
+    <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
     
     <!-- code properties -->
     <javaee.api.version>8.0.0</javaee.api.version>

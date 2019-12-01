@@ -121,4 +121,33 @@ public class BankingBean {
         em.persist(usr);
         return usr;
     }
+    /**
+     * Reads a user
+     * @param id the id of user to read
+     * @return the User object
+     */
+    public User readUser(int id) {
+        return em.find(User.class, id);
+    }
+    /**
+     *  Updates a user
+     * @param User the user to be updated
+     * @return updated user
+     */
+    @Transactional
+    public User updateUser(User usr) {
+        return em.merge(usr);
+    }
+
+    /**
+     * Deletes a user
+     * @param id the id of the User to delete
+     */
+    @Transactional
+    public void deleteUser(int id) {
+        User usr = readUser(id);
+        if (usr != null) {
+          em.remove(usr);
+        }
+    }
 }
