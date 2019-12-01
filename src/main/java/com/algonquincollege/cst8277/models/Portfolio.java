@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * 
  */
 @Entity
-//@NamedQuery(name="Portfolio.findAll", query="SELECT p FROM Portfolio p")
 public class Portfolio extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
 

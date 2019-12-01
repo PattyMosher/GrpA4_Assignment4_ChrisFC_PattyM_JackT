@@ -56,29 +56,28 @@ public class AccountResource {
         return Response.ok(accounts).build();
     }
     
-    /**
-     * Mike Norman example.
-     * @param id
-     * @return
-     */
-    @GET
-    @RolesAllowed(USER_ROLE)
-    @Path("{id}")
-    public Response getUserById(@PathParam("id") int id) {
-        Response response = null;
-        Principal principal = sc.getCallerPrincipal();
-        if (principal == null) {
-            response = Response.serverError().entity("{\"message\":\"missing principal\"}").build();
-        }
-        else {
-            PlatformUser platformUser = (PlatformUser)principal;
-            if (platformUser.getBankingUser() == null || platformUser.getBankingUser().getId() != id) {
-                response = Response.status(Status.UNAUTHORIZED).entity("{\"message\":\"cannot get user\"}").build();
-            }else {
-                response = Response.ok(platformUser.getBankingUser()).build();
-            }
-        }
-        return response;
-
-   }
+//    /**
+//     * Mike Norman example.
+//     * @param id
+//     * @return
+//     */
+//    @GET
+//    @RolesAllowed(USER_ROLE)
+//    @Path("{id}")
+//    public Response getUserById(@PathParam("id") int id) {
+//        Response response = null;
+//        Principal principal = sc.getCallerPrincipal();
+//        if (principal == null) {
+//            response = Response.serverError().entity("{\"message\":\"missing principal\"}").build();
+//        }
+//        else {
+//            PlatformUser platformUser = (PlatformUser)principal;
+//            if (platformUser.getBankingUser() == null || platformUser.getBankingUser().getId() != id) {
+//                response = Response.status(Status.UNAUTHORIZED).entity("{\"message\":\"cannot get user\"}").build();
+//            }else {
+//                response = Response.ok(platformUser.getBankingUser()).build();
+//            }
+//        }
+//        return response;
+//   }
 }

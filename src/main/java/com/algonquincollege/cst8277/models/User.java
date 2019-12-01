@@ -54,9 +54,7 @@ public class User extends ModelBase implements Serializable {
     }
 
 
-    @ManyToMany(targetEntity = AccountBase.class)
-    @JoinTable(name="USER_ACCOUNT_BANKACCOUNT",
-    joinColumns=@JoinColumn(name="ACCOUNT_ID", referencedColumnName="ACCOUNT_ID"))
+    @ManyToMany(mappedBy="owners")
     public List<AccountBase> getAccounts() {
         return accounts;
     }

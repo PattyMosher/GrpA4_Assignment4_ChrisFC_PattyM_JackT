@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -59,7 +61,11 @@ public abstract class AccountBase extends ModelBase {
         return this.id;
     }
 
-    @ManyToMany(mappedBy="accounts")
+    @ManyToMany
+    @JoinTable(name = "USER_ACCOUNT_ACCOUNT", 
+        joinColumns = @JoinColumn(name =  "USER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "ACCOUNT_ID"))
+    @JoinColumn(name="ACCOUNT_ID")
     public List<User> getOwners() {
         return owners;
     }
