@@ -36,15 +36,20 @@ public class BankingBean {
      * @param accountId the account to fetch
      * @return account
      */
-    public AccountBase createChequingAccounts(int balance, int userId) {
+    @Transactional
+    public AccountBase createChequingAccounts(AccountBase newAccount) {
         ChequingAccount c = new ChequingAccount();
-        c.setBalance(balance);
-        c.addOwner(em.find(User.class, userId));
+        c.setId(newAccount.getId());
+        c.setBalance(newAccount.getBalance());
         em.persist(c);
         return c;
     }
 
     
+    public List<AccountBase> getAllAccounts() {
+        TypedQuery<AccountBase> query = em.createQuery("SELECT a FROM AccountBase a", AccountBase.class);
+        return query.getResultList();
+    }
     
     /**
      *  Gets account by accountId
@@ -115,8 +120,9 @@ public class BankingBean {
      * @return User
      */
     @Transactional
-    public User createUser(String username) {
+    public User createUser(String username, User user) {
         User usr = new User();
+        usr.setId(user.getId());
         usr.setName(username);
         em.persist(usr);
         return usr;

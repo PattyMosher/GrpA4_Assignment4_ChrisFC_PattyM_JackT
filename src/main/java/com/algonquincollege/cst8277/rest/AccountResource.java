@@ -1,3 +1,14 @@
+/**************************************************************G*********o****o****g**o****og**joob*********************
+ * File: AccountResource.java
+ * Course materials (19F) CST 8277
+ * @author Mike Norman
+ *
+ * @date 2019 10
+ * 
+ * @author Patty Mosher, Jack Tan, Chris Fortin-Cherryholme
+ * @modified Nov 2019
+ */
+
 package com.algonquincollege.cst8277.rest;
 
 import java.security.Principal;
@@ -11,6 +22,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.security.enterprise.SecurityContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,6 +36,7 @@ import com.algonquincollege.cst8277.ejbs.BankingBean;
 import com.algonquincollege.cst8277.models.AccountBase;
 import com.algonquincollege.cst8277.models.ChequingAccount;
 import com.algonquincollege.cst8277.models.PlatformUser;
+import com.algonquincollege.cst8277.models.User;
 @Path("account")
 public class AccountResource {
     
@@ -33,11 +46,19 @@ public class AccountResource {
     @Inject
     protected SecurityContext sc;
     
+    /**
+     * Create an account.
+     * @param id
+     * @param newAccount
+     * @return
+     */
     @RolesAllowed({ADMIN_ROLE}) // can't let just ANYONE create a new bank account/user
     @POST
-    @Path("{balance}")
-    public Response newBankingUser(@PathParam("balance") int balance, @PathParam("userId") int userId) {
-        ChequingAccount chequingAccount = (ChequingAccount) bean.createChequingAccounts(balance, userId);
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response newAccount(@PathParam("id") int id, AccountBase newAccount) {
+        ChequingAccount chequingAccount = (ChequingAccount) bean.createChequingAccounts(newAccount);
         return Response.ok(chequingAccount).build();
     }
 
@@ -56,28 +77,41 @@ public class AccountResource {
         return Response.ok(accounts).build();
     }
     
-//    /**
-//     * Mike Norman example.
-//     * @param id
-//     * @return
-//     */
-//    @GET
-//    @RolesAllowed(USER_ROLE)
-//    @Path("{id}")
-//    public Response getUserById(@PathParam("id") int id) {
-//        Response response = null;
-//        Principal principal = sc.getCallerPrincipal();
-//        if (principal == null) {
-//            response = Response.serverError().entity("{\"message\":\"missing principal\"}").build();
+    /**
+     * Security omitted for now while testing. See next method for an example.
+     * @param id
+     * @return
+     */
+//    @RolesAllowed({ADMIN_ROLE, USER_ROLE})
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBankAccounts() {
+        Response response = null;
+//        if (sc.isCallerInRole(ADMIN_ROLE)) {
+            List<AccountBase> accounts = bean.getAllAccounts();
+            Response.ok(accounts).build();
+//        }else {
+//            response = Response.status(Status.UNAUTHORIZED).entity("{\"message\":\"cannot get user\"}").build();
 //        }
-//        else {
-//            PlatformUser platformUser = (PlatformUser)principal;
-//            if (platformUser.getBankingUser() == null || platformUser.getBankingUser().getId() != id) {
-//                response = Response.status(Status.UNAUTHORIZED).entity("{\"message\":\"cannot get user\"}").build();
-//            }else {
-//                response = Response.ok(platformUser.getBankingUser()).build();
-//            }
+        return response;
+    }
+    
+    /**
+     * Delete an account based on id
+     * @param id
+     * @return
+     */
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAccount(@PathParam("id") int id) {
+        Response response = null;
+//        if (sc.isCallerInRole(ADMIN_ROLE)) {
+            bean.deleteAccount(id);
+            response = Response.ok().build();
 //        }
-//        return response;
-//   }
+        return response;
+    }
 }
